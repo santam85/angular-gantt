@@ -47,11 +47,11 @@ gantt.constant('GANTT_EVENTS',
         'TIMESPAN_CHANGED': 'event:gantt-timespan-changed'
     });
 
-gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScrollPos', 'Events', 'GANTT_EVENTS', function(Gantt, moment, mouseOffset, debounce, keepScrollPos, Events, GANTT_EVENTS) {
+gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScrollPos', 'Events', 'GANTT_EVENTS', function (Gantt, moment, mouseOffset, debounce, keepScrollPos, Events, GANTT_EVENTS) {
     return {
         restrict: 'EA',
         replace: true,
-        templateUrl: function(tElement, tAttrs) {
+        templateUrl: function (tElement, tAttrs) {
             if (tAttrs.templateUrl === undefined) {
                 return 'template/default.gantt.tmpl.html';
             } else {
@@ -104,7 +104,7 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             clearData: '&',
             centerDate: '&'
         },
-        controller: ['$scope', '$element', function($scope, $element) {
+        controller: ['$scope', '$element', function ($scope, $element) {
             // Initialize defaults
             if ($scope.sortMode === undefined) {
                 $scope.sortMode = 'name';
@@ -201,28 +201,24 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             $scope.template = {};
             $scope.gantt = new Gantt($scope, $element);
 
-            $scope.$watch('sortMode', function(newValue, oldValue) {
+            $scope.$watch('sortMode', function (newValue, oldValue) {
                 if (!angular.equals(newValue, oldValue)) {
                     $scope.sortRows();
                 }
             });
 
-            $scope.$watch('timespans', function(newValue, oldValue) {
-                if (!angular.equals(newValue, oldValue)) {
-                    $scope.removeAllTimespans();
-                    $scope.setTimespans(newValue);
-                }
-            });
+            $scope.$watch('timespans', function (newValue) {
+                $scope.removeAllTimespans();
+                $scope.setTimespans(newValue);
+            }, true);
 
-            $scope.$watch('data', function(newValue, oldValue) {
-                if (!angular.equals(newValue, oldValue)) {
-                    $scope.removeAllData();
-                    $scope.setData(newValue);
-                }
-            });
+            $scope.$watch('data', function (newValue) {
+                $scope.removeAllData();
+                $scope.setData(newValue);
+            }, true);
 
             // Swaps two rows and changes the sort order to custom to display the swapped rows
-            $scope.swapRows = function(a, b) {
+            $scope.swapRows = function (a, b) {
                 $scope.gantt.swapRows(a, b);
 
                 // Raise change events
@@ -238,30 +234,30 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             };
 
             // Sort rows by the current sort mode
-            $scope.sortRows = function() {
+            $scope.sortRows = function () {
                 $scope.gantt.sortRows($scope.sortMode);
             };
 
             // Scroll to the specified x
-            $scope.scrollTo = function(x) {
+            $scope.scrollTo = function (x) {
                 $scope.template.scrollable.$element[0].scrollLeft = x;
                 $scope.template.scrollable.$element.triggerHandler('scroll');
             };
 
             // Scroll to the left side by specified x
-            $scope.scrollToLeft = function(x) {
+            $scope.scrollToLeft = function (x) {
                 $scope.template.scrollable.$element[0].scrollLeft -= x;
                 $scope.template.scrollable.$element.triggerHandler('scroll');
             };
 
             // Scroll to the right side by specified x
-            $scope.scrollToRight = function(x) {
+            $scope.scrollToRight = function (x) {
                 $scope.template.scrollable.$element[0].scrollLeft += x;
                 $scope.template.scrollable.$element.triggerHandler('scroll');
             };
 
             // Tries to center the specified date
-            $scope.scrollToDate = function(date) {
+            $scope.scrollToDate = function (date) {
                 var column = $scope.gantt.getColumnByDate(date);
                 if (column !== undefined) {
                     var x = (column.left + column.width / 2);
@@ -269,7 +265,7 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
                 }
             };
 
-            $scope.autoExpandColumns = keepScrollPos($scope, function(el, date, direction) {
+            $scope.autoExpandColumns = keepScrollPos($scope, function (el, date, direction) {
                 if ($scope.autoExpand !== 'both' && $scope.autoExpand !== true && $scope.autoExpand !== direction) {
                     return;
                 }
@@ -290,11 +286,11 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             });
 
             // Add or update rows and tasks
-            $scope.setData = keepScrollPos($scope, function(data) {
+            $scope.setData = keepScrollPos($scope, function (data) {
                 $scope.gantt.addData(data,
-                    function(row) {
+                    function (row) {
                         $scope.$emit(GANTT_EVENTS.ROW_ADDED, {'row': row});
-                    }, function(row) {
+                    }, function (row) {
                         $scope.$emit(GANTT_EVENTS.ROW_CHANGED, {'row': row});
                     });
 
@@ -302,8 +298,8 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             });
 
             // Remove specified rows and tasks.
-            $scope.removeData({ fn: function(data) {
-                $scope.gantt.removeData(data, function(row) {
+            $scope.removeData({ fn: function (data) {
+                $scope.gantt.removeData(data, function (row) {
                     $scope.$emit(GANTT_EVENTS.ROW_CHANGED, {'row': row});
                 });
 
@@ -311,7 +307,7 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             }});
 
             // Clear all existing rows and tasks
-            $scope.removeAllData = function() {
+            $scope.removeAllData = function () {
                 // Clears rows, task and columns
                 $scope.gantt.removeAllRows();
                 // Restore default columns
@@ -319,7 +315,7 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             };
 
             // Clear all existing timespans
-            $scope.removeAllTimespans = function() {
+            $scope.removeAllTimespans = function () {
                 // Clears rows, task and columns
                 $scope.gantt.removeAllTimespans();
                 // Restore default columns
@@ -327,11 +323,11 @@ gantt.directive('gantt', ['Gantt', 'moment', 'mouseOffset', 'debounce', 'keepScr
             };
 
             // Add or update timespans
-            $scope.setTimespans = keepScrollPos($scope, function(timespans) {
+            $scope.setTimespans = keepScrollPos($scope, function (timespans) {
                 $scope.gantt.addTimespans(timespans,
-                    function(timespan) {
+                    function (timespan) {
                         $scope.$emit(GANTT_EVENTS.TIMESPAN_ADDED, {timespan: timespan});
-                    }, function(timespan) {
+                    }, function (timespan) {
                         $scope.$emit(GANTT_EVENTS.TIMESPAN_CHANGED, {timespan: timespan});
                     });
             });
