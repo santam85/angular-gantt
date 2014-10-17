@@ -2537,13 +2537,13 @@ gantt.directive('ganttScrollManager', function() {
 });
 
 
-gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout) {
+gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout,debounce) {
     // Updates the element which are registered for the horizontal or vertical scroll event
 
     return {
         restrict: 'A',
         require: '^ganttScrollManager',
-        controller: ['$scope', '$element', function($scope, $element) {
+        controller: ['$scope', '$element', 'jquery', function($scope, $element) {
             var el = $element[0];
             var updateListeners = function() {
                 var i, l;
@@ -2574,6 +2574,19 @@ gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout)
                     }, 0, true);
                 }
             });
+
+            $scope.$watch(function() {
+              return $scope.scrollManager.vertical.map(function(scroller){
+                return angular.element(scroller).children().length;
+              }).reduce(function(a,b){
+                return a+b;
+              });
+            }, debounce(function() {
+              $timeout(function() {
+                updateListeners();
+              }, 0, true);
+            },5));
+
         }]
     };
 }]);

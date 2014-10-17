@@ -5,7 +5,7 @@ gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout,
     return {
         restrict: 'A',
         require: '^ganttScrollManager',
-        controller: ['$scope', '$element', function($scope, $element) {
+        controller: ['$scope', '$element', 'jquery', function($scope, $element) {
             var el = $element[0];
             var updateListeners = function() {
                 var i, l;
@@ -39,7 +39,7 @@ gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout,
 
             $scope.$watch(function() {
               return $scope.scrollManager.vertical.map(function(scroller){
-                return $(scroller).children().length;
+                return angular.element(scroller).children().length;
               }).reduce(function(a,b){
                 return a+b;
               });
