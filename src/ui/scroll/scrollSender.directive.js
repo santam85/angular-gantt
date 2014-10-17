@@ -36,6 +36,19 @@ gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout)
                     }, 0, true);
                 }
             });
+
+            $scope.$watch(function() {
+              return $scope.scrollManager.vertical.map(function(scroller){
+                $(scroller).children().length;
+              }).reduce(function(a,b){
+                return a+b;
+              });
+            }, debounce(function() {
+              $timeout(function() {
+                updateListeners();
+              }, 0, true);
+            },5));
+
         }]
     };
 }]);
