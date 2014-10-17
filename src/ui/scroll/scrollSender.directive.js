@@ -1,5 +1,5 @@
 'use strict';
-gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout) {
+gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout,debounce) {
     // Updates the element which are registered for the horizontal or vertical scroll event
 
     return {
@@ -39,7 +39,7 @@ gantt.directive('ganttScrollSender', ['$timeout', 'debounce', function($timeout)
 
             $scope.$watch(function() {
               return $scope.scrollManager.vertical.map(function(scroller){
-                $(scroller).children().length;
+                return $(scroller).children().length;
               }).reduce(function(a,b){
                 return a+b;
               });
