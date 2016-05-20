@@ -19,17 +19,23 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/es5-shim/es5-shim.js',
       'bower_components/angular/angular.js',
-      'bower_components/json3/lib/json3.js',
+      'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-animate/angular-animate.js',
-      'bower_components/bootstrap/dist/js/bootstrap.js',
+      'bower_components/json3/lib/json3.js',
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
+      'bower_components/angular-native-dragdrop/draganddrop.js',
+      'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
       'bower_components/moment/moment.js',
       'bower_components/angular-moment/angular-moment.js',
       'bower_components/angular-gantt/assets/angular-gantt.js',
+      'bower_components/angular-gantt/assets/angular-gantt-plugins.js',
+      'bower_components/moment-range/dist/moment-range.js',
+      'bower_components/css-element-queries/src/ElementQueries.js',
+      'bower_components/css-element-queries/src/ResizeSensor.js',
+      'bower_components/jsPlumb/dist/js/jsPlumb-2.0.7.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -1,13 +1,14 @@
 # angular-gantt [![npm version](http://img.shields.io/npm/v/angular-gantt.svg)](https://npmjs.org/package/angular-gantt) [![build status](http://img.shields.io/travis/angular-gantt/angular-gantt.svg)](https://travis-ci.org/angular-gantt/angular-gantt)
-##The gantt chart directive for AngularJS
 
-### Demo project
+##Gantt chart component for AngularJS
+
+## Demo project
 
 Demo project is a showcase for [angular-gantt](https://github.com/angular-gantt/angular-gantt).
 
 It's generated using [yeoman angular generator](https://github.com/yeoman/generator-angular).
 
-### Development
+## Development
 
 You will need [npm](https://www.npmjs.org/), [grunt](http://gruntjs.com/) and [bower](http://bower.io/).
 
@@ -28,10 +29,9 @@ To use local sources of [angular-gantt](https://github.com/angular-gantt/angular
     $ cd demo
     $ bower link angular-gantt
 
-### License
-**The MIT License**
+## The MIT License
 
-Copyright (c) 2014 Marco Schweighauser, Rémi Alvergnat
+Copyright (c) 2015 Marco Schweighauser, Rémi Alvergnat
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
